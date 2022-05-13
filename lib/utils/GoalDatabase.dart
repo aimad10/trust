@@ -6,7 +6,7 @@ import '../models/Goal.dart';
 
 class GoalDatabase
 {
-  static GoalDatabase _goalDatabase;
+  static GoalDatabase _goalDatabase; //two databasses and keys to be input
   static Database _database;        
 
 	String _goalTable = 'goal_table';
@@ -18,28 +18,28 @@ class GoalDatabase
 
   GoalDatabase._createInstance();
 
-  factory GoalDatabase()
+  factory GoalDatabase() 
   {
-    if (_goalDatabase == null) {_goalDatabase = GoalDatabase._createInstance();}
+    if (_goalDatabase == null) {_goalDatabase = GoalDatabase._createInstance();} //if it's not created, create instance of goal database
     return _goalDatabase;
   }
 
-  Future<Database> get database async 
+  Future<Database> get database async  //return normal database that will be copied into goaldatabase
   {
-    if (_database == null) {_database = await initializeDatabase();}
+    if (_database == null) {_database = await initializeDatabase();} 
     return _database;
   }
 
-  Future<Database> initializeDatabase() async
+  Future<Database> initializeDatabase() async //intialize database
   {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'goals.db';
 
-    var goalsDatabase = await openDatabase(path, version: 1, onCreate: _createDatabase);
+    var goalsDatabase = await openDatabase(path, version: 1, onCreate: _createDatabase); //open the database & return it, if not created, create it. 
     return goalsDatabase;
   }
 
-  void _createDatabase(Database database, int newVersion) async
+  void _createDatabase(Database database, int newVersion) async //creates 5 ids and adds three dummy tasks
   {
     await database.execute('''
       CREATE TABLE $_goalTable (
@@ -49,9 +49,11 @@ class GoalDatabase
         $_date TEXT,
         $_description TEXT)''');
 
-    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal", "test", 1, "today")');
-    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal2", "test", 2, "today")');
-    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal3", "test", 3, "today")');
+    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("Pass this interview", "Flutter 1 is a mess", 100, "today")');
+    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal2", "test", 2, "Tuesday")');
+    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal3", "test", 3, "Friday")');
+    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal4", "test", 4, "Saturday")');
+    await database.rawInsert('INSERT INTO $_goalTable ($_name, $_description, $_amount, $_date) VALUES("goal5", "test", 5, "Sunday")');
   }
   
   Future<List<Map<String, dynamic>>> getGoalsMap() async 

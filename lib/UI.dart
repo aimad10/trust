@@ -5,7 +5,7 @@ import 'package:trust/main.dart';
 import 'screens/CreateTaskScreen.dart';
 
 typedef void ButtonCallback();
-class Button extends StatelessWidget
+class Button extends StatelessWidget //buttons at the create page
 {
   ButtonCallback clicked;
   String text;double width;Color color;Color fontColor;double font;double height;
@@ -64,7 +64,7 @@ class Button extends StatelessWidget
 }
 
 typedef void ButtonIconCallback();
-class ButtonIcon extends StatelessWidget
+class ButtonIcon extends StatelessWidget //a class to make an icon a button
 {
   ButtonIconCallback clicked;
   Color color;double size;IconData icon;double padding;double density;Color pressed;
@@ -86,7 +86,7 @@ class ButtonIcon extends StatelessWidget
 }
 
 typedef void StringCallback(String s);
-class DatePicker extends StatelessWidget
+class DatePicker extends StatelessWidget 
 {
   final DateTime _dateTime = DateTime.now();
   //init callback

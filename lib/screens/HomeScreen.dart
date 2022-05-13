@@ -14,20 +14,22 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+//import all of the packages needed 
 
-class GoalContainer extends StatefulWidget
+class GoalContainer extends StatefulWidget //the container for the left page of goals 
 {
-  String name; int amount; String duedate; String description; bool first; bool last;
-  GoalContainer({this.name, this.amount, this.duedate, this.description, this.first, this.last});
+  String name; int amount; String duedate; String description; bool first; bool last; //initialize the keys that it will take
+  GoalContainer({this.name, this.amount, this.duedate, this.description, this.first, this.last}); //add those keys to the actual goal container
   
   _GoalContainer createState() => _GoalContainer();
 }
-class _GoalContainer extends State<GoalContainer>
+
+class _GoalContainer extends State<GoalContainer> //actually what the goal container is, drawing of the little cards
 {
   Widget build(BuildContext context)
   {
-    double w = MediaQuery.of(context).size.width; double h = MediaQuery.of(context).size.height;
-    return Align(
+    double w = MediaQuery.of(context).size.width; double h = MediaQuery.of(context).size.height; //get width and height 
+    return Align( //actual formatting of the goals
       alignment: Alignment(-.75, 0),
       child: Container(
         margin: EdgeInsets.only(bottom: 4),
@@ -39,7 +41,7 @@ class _GoalContainer extends State<GoalContainer>
               alignment: Alignment(.35, 0),
               child: Column(
                 children: <Widget>[
-                  Icon(widget.first ? Icons.error_outline : Icons.adjust, size: 22, color: Colors.white,),
+                  Icon(widget.first ? Icons.error_outline : Icons.adjust, size: 22, color: Colors.white,), //if first set the icon to be the error
                   widget.last ? Container(width: 2.2) : 
                           Expanded(child: Container(margin: EdgeInsets.only(top: 4), width: 2.2, color: Colors.white,)) 
                 ],
@@ -156,12 +158,12 @@ class _GoalContainer extends State<GoalContainer>
   }
 }
 
-typedef void TaskCallback(int state);
-class TaskContainer extends StatefulWidget
+typedef void TaskCallback(int state); //define TaskCallback as a void function that takes int state
+class TaskContainer extends StatefulWidget // container for all of the tasks to show on the main screen 
 {
-  TaskCallback taskCallback;
-  String name; String duedate; int state; int level;
-  TaskContainer({this.name, this.duedate, this.state, this.level, this.taskCallback});
+  TaskCallback taskCallback; 
+  String name; String duedate; int state; int level; 
+  TaskContainer({this.name, this.duedate, this.state, this.level, this.taskCallback}); 
   
   _TaskContainer createState() => _TaskContainer();
 }
@@ -169,7 +171,7 @@ class _TaskContainer extends State<TaskContainer>
 {
   Widget build(BuildContext context)
   {
-    double w = MediaQuery.of(context).size.width; double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width; double h = MediaQuery.of(context).size.height; //get width and height
     bool checked = widget.state == 1 ? true : false;
     return Align(
       alignment: Alignment.center,
@@ -183,12 +185,12 @@ class _TaskContainer extends State<TaskContainer>
               width: 44, 
               height: 56,
               child: GestureDetector(
-                onTap: () => widget.taskCallback(1),
+                onTap: () => widget.taskCallback(1),// when you tap the delete button, pass 1 to to task callback to delete it
                 child: Icon(Icons.close, color: Colors.white, size: 32,),
               ),
             )
             : Container(),
-            Expanded(
+            Expanded( //unchecked tasks
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.ease,
@@ -237,27 +239,27 @@ class _TaskContainer extends State<TaskContainer>
   }
 }
 
-typedef void HeaderCallBack(int tab);
-class Header extends StatefulWidget
+typedef void HeaderCallBack(int tab); //define HeaderCallback as a void function that takes the current tab
+class Header extends StatefulWidget //class for the header at the top of the page
 {
-  HeaderCallBack onTabChange; double tab;
-  Header({this.onTabChange, this.tab});
+  HeaderCallBack onTabChange; double tab;  
+  Header({this.onTabChange, this.tab}); 
   @override
   _Header createState() => _Header();
 }
 class _Header extends State<Header>
 {
-  String date; String time;
+  String date; String time; 
 
   @override
   void initState() 
   {
-    date = DateFormat('EEEE, MMMM d').format(DateTime.now());
+    date = DateFormat('EEEE, MMMM d').format(DateTime.now()); 
     time = DateFormat('h:mm a').format(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
-    super.initState();
+    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime()); 
+    super.initState(); 
   }
-  void _getTime()
+  void _getTime() //simple function to update the time, and sets the state to let flutter know to redraw screen
   {
     setState(() 
     {
@@ -268,18 +270,18 @@ class _Header extends State<Header>
 
   Widget build(BuildContext context)
   {
-    double thistab = widget.tab;
+    double thistab = widget.tab; //get current tab 
     double w = MediaQuery.of(context).size.width;
     
     return Container(
-      decoration: BoxDecoration(
+      decoration: BoxDecoration( //bottom part of header
         color: Color(0xFFE8E9EB),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.elliptical(40, 30),
           bottomRight: Radius.elliptical(40, 30),
         ),
       ),
-      child: Column(
+      child: Column( //top part with the times
         children: <Widget>[
           Container(
             width: w,
@@ -296,7 +298,7 @@ class _Header extends State<Header>
               child: Column(
                 children: <Widget>[
                   Center(
-                    child: Text(time, style: TextStyle(fontSize: 36)),
+                    child: Text(time, style: TextStyle(fontSize: 36)), //write the date and time's at the top
                   ),
                   Center(
                     child: Text(date, style: TextStyle(fontSize: 14)),
@@ -316,7 +318,7 @@ class _Header extends State<Header>
                   width: 115,
                   child: GestureDetector(
                     child: Container(child: Text("goals", style: TextStyle(fontSize: 20))),
-                    onTap: () {widget.onTabChange(-1);},
+                    onTap: () {widget.onTabChange(-1);}, //telling to when you tap it change it to that page
                   ),
                 ),
                 Container(
@@ -338,7 +340,7 @@ class _Header extends State<Header>
               ],
             ),
           ),
-          AnimatedContainer(
+          AnimatedContainer( //indicator of current tab
             width: 345,
             duration: Duration(milliseconds: 90),
             curve: Curves.ease,
@@ -358,53 +360,54 @@ class _Header extends State<Header>
   }
 }
 
-class Body extends StatefulWidget
+class Body extends StatefulWidget //create body
 {
   @override
   _Body createState() => _Body();
 }
 class _Body extends State<Body>
 {
-  TaskDatabase taskDatabase = TaskDatabase();
+  TaskDatabase taskDatabase = TaskDatabase(); //initilize the databases, defined in task & goaldatabase.dart
   GoalDatabase goalDatabase = GoalDatabase();
-  List<Task> taskList;
+  List<Task> taskList; 
   List<Goal> goalList;
   int taskSize = 0; int goalSize; 
   double _tab = 0;
-  PageController _pageController;
+  PageController _pageController; 
   double completed = 0;
   void initState()
   {
-    _pageController = PageController(initialPage: _tab.toInt() + 1,)..addListener(_updateTab);
+    _pageController = PageController(initialPage: _tab.toInt() + 1,)..addListener(_updateTab); //why isn't _tab just an int LOL
+                                                                                               // make initialpage 1, and tell it to _updateTab
     super.initState();
   }
-  void _delete(Task task) async
+  void _delete(Task task) async //delete a task,
   {
     await taskDatabase.deleteTask(task.id);
     print("deleted");
     _update();
   }
-  void _create() async
+  void _create() async //create a new task 
   {
-    var result = await Navigator.push(context, fadeRoute(CreateScreen()));
-    if (result[0] == true) 
+    var result = await Navigator.push(context, fadeRoute(CreateScreen())); //take the array that is passed onto it from the CreateScreen() in CreateTaskScreen.dart
+    if (result[0] == true) //if it's a valid result
     {
-      Task newTask = new Task(result[1],result[2],result[3],result[4]);
+      Task newTask = new Task(result[1],(result[3]),result[2],result[2]); //create a task object as defined in Task.dart
       taskDatabase.insertTask(newTask);
       _update();
     }
   }
-  void _update()
+  void _update() //gets most current tasklist and sets it as a global
   {
-    final Future<Database> db = taskDatabase.initializeDatabase();
-    db.then((database) 
+    final Future<Database> db = taskDatabase.initializeDatabase();//initilialize the database so we can add stuff to it. 
+    db.then((database)                                            
       {
-        Future<List<Task>> taskListFuture = taskDatabase.getTasksList();
-        taskListFuture.then((taskList)
+        Future<List<Task>> taskListFuture = taskDatabase.getTasksList();  //get the list of all the tasks 
+        taskListFuture.then((taskList)  //load the tasklist future into tasklist
           {
             setState(() 
             {
-              this.taskList = taskList;
+              this.taskList = taskList; //set the globals about the task list and tasklist.length for rendering
 				      this.taskSize = taskList.length;
             });
           }
@@ -414,7 +417,7 @@ class _Body extends State<Body>
   }
   void _updateGoals()
   {
-    final Future<Database> db = goalDatabase.initializeDatabase();
+    final Future<Database> db = goalDatabase.initializeDatabase(); //same thing, just for the goals
     db.then((database) 
       {
         Future<List<Goal>> goalListFuture = goalDatabase.getGoalsList();
@@ -430,23 +433,23 @@ class _Body extends State<Body>
       }
     );
   }
-  void _updateTab()
+  void _updateTab() //when called, tell the  page controller to display the page - 1. Weird workaround that could be done a lot cleaner
   {
     setState(() {_tab = _pageController.page - 1;});
   }
-  void _changeTab(int tab)
+  void _changeTab(int tab) //to change view to the page that the tab is displaying 
   {
-    setState(() 
+    setState(() //set state because it needs to draw soemthing
     {
-      int time = tab - _tab.abs() > 1 ? 600 : 400;
-      _pageController.animateToPage(tab + 1, duration: Duration(milliseconds: time), curve: Curves.ease,);
+      int time = tab - _tab.abs() > 1 ? 600 : 400; //if the absolute value of the tabs you're trying to switch to is > 1, then take 600 ms to get there, otherwise 400
+      _pageController.animateToPage(tab + 1, duration: Duration(milliseconds: time), curve: Curves.ease,); 
     });
   } 
   Column _getTodos(BuildContext context)
   {
-    double percent = completed == 0 || taskSize == 0 ? 0 : completed / taskSize;
+    double percent = completed == 0 || taskSize == 0 ? 0 : completed / taskSize; //if none completed or no tasks, show percentage as zero, otherwise, report percent
     double w = MediaQuery.of(context).size.width;
-    void _changeState(Task task) async
+    void _changeState(Task task) async //change state of taskdatabase if a task is change
     {
       print("changing");
       task.state = (task.state == 1) ? 0 : 1;
@@ -455,7 +458,7 @@ class _Body extends State<Body>
     }
     ListView getTodos()
     {
-      if (taskSize == 0 || taskSize == null)
+      if (taskSize == 0 || taskSize == null) //if no tasks return empty page
         return ListView.builder(itemBuilder: (BuildContext context, int position) {});
       completed = 0;
       return ListView.builder(
@@ -464,13 +467,13 @@ class _Body extends State<Body>
         itemCount: taskSize,
         itemBuilder: (BuildContext context, int position)
         {
-          if (taskList[position].state == 1) {completed++; percent = completed / taskSize;}
+          if (taskList[position].state == 1) {completed++; percent = completed / taskSize;} //if the task list is about to be changed, update the completed percentage
           return TaskContainer(
             name: taskList[position].name, 
             duedate: "<date>",
             state: taskList[position].state ?? 0,
             level: 0,
-            taskCallback: (state)  =>  state == 0 ?_changeState(taskList[position]) : _delete(taskList[position]),
+            taskCallback: (state)  =>  state == 0 ?_changeState(taskList[position]) : _delete(taskList[position]), //
           );
         }
       );
@@ -478,12 +481,12 @@ class _Body extends State<Body>
     Container getProgress()
     {
       completed = 0;
-      for (int position = 0; position < taskSize; position++)
+      for (int position = 0; position < taskSize; position++)//iterate through the task list and see what percent of completed it is; then update percentage
       {
         if (taskList[position].state == 1) {completed++; percent = completed / taskSize;}
-      }
+      } 
       _update();
-      return Container(
+      return Container( //draw percent bar
         width: w * .8,
         alignment: Alignment.topCenter,
         child: Padding(
@@ -513,7 +516,7 @@ class _Body extends State<Body>
         ),
       );
     }
-    return Column(
+    return Column( //draw actual body, of progress bar and then todos
       children: <Widget>[
         Container(
           alignment: Alignment.topCenter,
@@ -525,10 +528,10 @@ class _Body extends State<Body>
       ],
     );
   }
-  Column _getGoals(BuildContext context)
+  Column _getGoals(BuildContext context) //goal page
   {
     double w = MediaQuery.of(context).size.width;
-    ListView getGoals()
+    ListView getGoals() //gets the goals part of the goal page
     {
       if (goalSize == 0 || goalSize == null)
         return ListView.builder(itemBuilder: (BuildContext context, int position) {});
@@ -539,7 +542,7 @@ class _Body extends State<Body>
         itemCount: goalSize,
         itemBuilder: (BuildContext context, int position)
         {
-          return GoalContainer(
+          return GoalContainer( //container building using goallist created from _updategoals()
             name: goalList[position].name,
             description: goalList[position].description,
             duedate: goalList[position].date,
@@ -550,7 +553,7 @@ class _Body extends State<Body>
         }
       );
     }
-    Container getBalance()
+    Container getBalance() //just layout for showing the balance of the goals page
     {
       return Container(
         padding: EdgeInsets.only(top:18, bottom: 18),
@@ -619,9 +622,10 @@ class _Body extends State<Body>
   }
 
   @override
-  Widget build(BuildContext context)
+  Widget build(BuildContext context) //actually builds the page
   {
-    double w = MediaQuery.of(context).size.width; double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width; 
+    double h = MediaQuery.of(context).size.height;
     if (taskList == null) {taskList = List<Task>(); _update();}
     if (goalList == null) {goalList = List<Goal>(); _update();}
     
@@ -650,18 +654,18 @@ class _Body extends State<Body>
   }
 }
 
-class HomeScreen extends StatefulWidget
+class HomeScreen extends StatefulWidget //builds the homescreen 
 {
   @override
   _HomeScreen createState() => _HomeScreen();
 }
-class _HomeScreen extends State<HomeScreen> 
+class _HomeScreen extends State<HomeScreen> //builds the body from body()
 {
 	@override
 	Widget build(BuildContext context)
 	{
 		return Scaffold(
-      backgroundColor: Color(0xFF3A3D40),
+      backgroundColor: Colors.orangeAccent,
 			body: Body(),
 		);
 	}

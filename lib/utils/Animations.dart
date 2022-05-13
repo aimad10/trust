@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
-
+//fade animation that plays when you exit creation screen 
 Route fadeRoute(var route)
 {
   return PageRouteBuilder(

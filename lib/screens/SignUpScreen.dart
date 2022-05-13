@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+//just a simple splash screen , not completed
 class SignUpScreen extends StatelessWidget 
 {
   @override

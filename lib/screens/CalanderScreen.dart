@@ -13,11 +13,15 @@ import 'DetailScreen.dart';
 import 'package:flutter/cupertino.dart';
 import '../utils/Animations.dart';
 
+//these are empty right now, the code here just draws the header
+
+//learn how to spell 
 class CalanderHeader extends StatefulWidget
 {
   @override
   _CalanderHeader createState() => _CalanderHeader();
 }
+//calendar view 
 class _CalanderHeader extends State<CalanderHeader>
 {  
   String date; String time;

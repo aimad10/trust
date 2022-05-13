@@ -6,7 +6,7 @@ import '../models/Task.dart';
 
 class TaskDatabase
 {
-  static TaskDatabase _taskDatabase;
+  static TaskDatabase _taskDatabase; //two databasses and keys to be input
   static Database _database;        
 
 	String _taskTable = 'task_table';
@@ -20,17 +20,17 @@ class TaskDatabase
 
   factory TaskDatabase()
   {
-    if (_taskDatabase == null) {_taskDatabase = TaskDatabase._createInstance();}
+    if (_taskDatabase == null) {_taskDatabase = TaskDatabase._createInstance();} //if it's not created, create instance of goal database
     return _taskDatabase;
   }
 
-  Future<Database> get database async 
+  Future<Database> get database async  //return normal database that will be copied into goaldatabase
   {
     if (_database == null) {_database = await initializeDatabase();}
     return _database;
   }
 
-  Future<Database> initializeDatabase() async
+  Future<Database> initializeDatabase() async //intialize database
   {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'tasks.db';
@@ -39,7 +39,7 @@ class TaskDatabase
     return tasksDatabase;
   }
 
-  void _createDatabase(Database database, int newVersion) async
+  void _createDatabase(Database database, int newVersion) async //creates 5 ids and adds a few  dummy tasks
   {
     await database.execute('''
       CREATE TABLE $_taskTable (

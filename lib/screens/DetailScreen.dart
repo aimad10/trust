@@ -11,6 +11,9 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import '../utils/Animations.dart';
+//all of the imports 
+
+//these are empty right now, the code here just draws the header
 
 class DetailHeader extends StatefulWidget
 {

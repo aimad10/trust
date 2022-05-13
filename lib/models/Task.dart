@@ -1,12 +1,13 @@
 class Task
 {
+  //all of the parameters
   int id;
   String name;
   String date;
   int state;
   int level;
 
-  Task(this.name, this.date, this.level, this.state);
+  Task(this.name, this.date, this.level, this.state); //add them as keys
   Task.withId(this.id, this.name, this.date, this.level, this.state);
 
   Map<String, dynamic> toMap() 
@@ -31,7 +32,7 @@ class Task
 	}
 
   @override
-  String toString() 
+  String toString() //return as a string
   {
     return 'Task{id: $id, name: $name, date: $date, level: $level, state: $state}';
   }

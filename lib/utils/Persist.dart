@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import '../models/Task.dart';
 
+//early, unused database; kept here for reference
+
 class Persist
 {
   static Persist _persist;
